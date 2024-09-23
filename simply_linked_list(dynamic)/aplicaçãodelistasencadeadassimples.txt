@@ -1,0 +1,47 @@
+*  As linguagens de programação têm bibliotecas com diversos métodos que podem ser utilizados para facilitar o uso e a manipulação de dados. Ao aplicarmos o uso de listas encadeadas em linguagem de programação Python, devemos compreender a sua estrutura e os métodos disponíveis para utilização, assim, irá facilitar o desenvolvimento da aplicação.
+
+
+1) Declaração de uma lista em Python:
+
+#Lista Vazia
+lista = []
+
+#Lista com 2 elementos
+lista = [5,3]
+
+
+2) Contar o número de ocorrências de um valor na lista:
+
+#Informa o número de ocorrências do número 3 na lista
+print(lista.count(3))
+#Saída do programa: 1
+
+
+3) Apagar uma lista:
+
+#Apaga todos os elementos de uma lista
+lista.clear()
+
+
+4) Adicionar elementos em uma lista:
+
+#O elemento será adicionado ao final da lista
+lista.append(10)
+
+#O elemento será adicionado em uma posição específica da lista
+#lista.insert(posição, conteúdo)
+lista.insert(1,7)
+
+
+5) Remover um elemento em uma lista:
+
+#Remove a primeira ocorrência do elemento em uma lista
+lista.remove(3)
+
+
+6) Retornar à posição de um elemento em uma lista:
+
+#Retorna a posição da primeira ocorrência do elemento 5 na lista
+lista_teste = [5,3,1,4,3,2,1]
+print(lista_teste.index(5))
+#Saída do Programa: 0

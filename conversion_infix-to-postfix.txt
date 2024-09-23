@@ -1,0 +1,119 @@
+Expressões mais longas, como, A * B + C / D, são um pouco mais envolvidas.
+
+Para ajudar nessa conversão, podemos usar um algoritmo simples:
+
+1. Coloque parênteses em torno de cada grupo de operadores na ordem correta de avaliação. Deve haver um conjunto de parênteses para cada operador na expressão do infixo.
+((A * B) + (C / D))
+
+2. Para cada conjunto de parênteses, mova o operador do meio para o final, precedendo o parêntese de fechamento correspondente:
+((A B *) (C D /) +)
+
+3. Remova todos os parênteses, resultando na expressão postfix equivalente:
+A B * C D / +
+
+4. Compare este resultado com uma versão modificada da expressão, na qual os parênteses são usados para colocar a adição como a primeira operação:
+A * (B + C) / D
+
+5. Usando o algoritmo simples e parênteses na expressão:
+((A * (B + C)) / D)
+
+6. E mova os operadores para o final de cada par de parênteses:
+((A (B C +) *) D /)
+
+7. Por fim, a remoção dos parênteses gera a expressão postfix:
+A B C + * D /
+
+
+
+
+Um algoritmo semelhante pode ser usado para converter de notação infix em prefixo. A diferença é que os operadores são movidos para a frente de cada grupo.
+
+# Classe para converter a expressão
+class Conversion:
+
+	# Construtor para inicializar as variáveis de classe
+ 	def _ _ init _ _ (self, capacity):
+ 	    self.top = -1
+     	    self.capacity = capacity
+ 	    # Essa matriz é usada como uma pilha
+     	    self.array = []
+    	    # Configuração de precedência
+ 	    self.output = []
+ 	    self.precedence = {‘+’: 1, ‘-’: 1, ‘*’: 2, ‘/’: 2, ‘^’: 3}
+ 
+	# Verifica se a pilha está vazia
+
+ 	def isEmpty(self):
+ 	    return True if self.top == -1 else False
+
+ 	# Retorna o valor do topo da pilha
+ 	def peek(self):
+ 	    return self.array[-1]
+	
+	# Remove o elemento da pilha
+ 	
+	def pop(self):
+ 	    if not self.isEmpty():
+ 		self.top -= 1
+ 		return self.array.pop()
+ 	    else:
+ 		return “$”
+
+ 	# Insere o elemento na pilha
+ 	def push(self, op):
+ 	    self.top += 1
+ 	    self.array.append(op)
+
+ 	# Uma função utilizada para verificar se o caractere dado é operando
+ 	def isOperand(self, ch):
+ 	    return ch.isalpha()
+ 	# Verifique se a precedência do operador é estritamente menor que o topo da pilha ou não
+ 	def notGreater(self, i):
+ 	    try:
+ 		a = self.precedence[i]
+ 		b = self.precedence[self.peek()]
+ 		return True if a <= b else False
+ 	    except KeyError:
+ 		return False
+
+ 	# A principal função que converte determinada expressão infix em expressão postfix
+ 	def infixToPostfix(self, exp):
+
+ 	# Iterar sobre a expressão para conversão
+ 	for i in exp:
+ 	    # Se o caractere for um operador, adiciona a saída
+ 	    if self.isOperand(i):
+	      self.output.append(i)
+
+	# Se o caractere for um ‘(‘, insere na pilha
+ 	elif i == ‘(‘:
+ 	    self.push(i)
+
+ 	# Se o caractere digitalizado for um ‘)’, retira e saída da 	pilha até que ‘(‘ seja encontrado
+ 	elif i == ‘)’:
+ 	    while ((not self.isEmpty()) and self.peek() != ‘(‘):
+
+	 	a = self.pop()
+ 		self.output.append(a)
+ 	    if (not self.isEmpty() and self.peek() != ‘(‘):
+ 		return -1
+	     else:
+ 		self.pop()
+
+ 	# Um operador é encontrado
+	else:
+	 while (not self.isEmpty() and self.notGreater(i)):
+		self.output.append(self.pop())
+ 	    self.push(i)
+
+    	# remove todos os operadores da pilha
+    	while not self.isEmpty():
+	    self.output.append(self.pop())
+
+    	print
+    	“”.join(self.output)
+
+     # Programa de driver para testar a função acima
+exp = “a+b*(c^d-e)^(f+g*h)-i”
+obj = Conversion(len(exp))
+obj.infixToPostfix(exp)
